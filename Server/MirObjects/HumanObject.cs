@@ -4279,7 +4279,7 @@ namespace Server.MirObjects
             monster.ActionTime = Envir.Time + 1000;
             monster.RefreshNameColour(false);
 
-             Pets.Add(monster);
+            Pets.Add(monster);
             action = new DelayedAction(DelayedType.Magic, Envir.Time + 500, this, magic, monster, Front, false);
             CurrentMap.ActionList.Add(action);
         }

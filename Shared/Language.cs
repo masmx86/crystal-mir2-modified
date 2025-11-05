@@ -139,7 +139,7 @@
                          NoCreatures = "You do not own any creatures.",
                          NoMount = "You do not own a mount.",
                          NoFishingRod = "You are not holding a fishing rod.",
-                         AttemptingConnect = "Attempting to connect to the server.{0}Attempt:{1}",
+                         AttemptingConnect = "Attempting to connect to the server.{0} Attempt:{1}",
 
                          CreatingCharactersDisabled = "Creating new characters is currently disabled.",
                          InvalidCharacterName = "Your Character Name is not acceptable.",
