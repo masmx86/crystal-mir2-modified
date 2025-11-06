@@ -10,6 +10,7 @@
     <BaseOutputPath>..\Build\Server Tools\LibraryViewer\</BaseOutputPath>
     <AssemblyName>CMirLibraryViewer</AssemblyName>
     <RootNamespace>CMirLibraryViewer</RootNamespace>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>
