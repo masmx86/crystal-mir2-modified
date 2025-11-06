@@ -12,7 +12,7 @@
    private bool CanRun()
    ```
    ```
-   Server\MirObjects\HumanObject.cs
+   Server.Library\MirObjects\HumanObject.cs
    public virtual bool CanRun()
    public bool Run()
    ```
@@ -27,7 +27,7 @@
 3、锁红锁蓝
 
    ```
-   Server\MirObjects\HumanObject.cs
+   Server.Library\MirObjects\HumanObject.cs
    public void ChangeHP()
    public void ChangeMP()
    ```
@@ -38,14 +38,14 @@
       锁蓝以后分身就会一直存在，无法消失  
 
    ```
-   Server\MirObjects\HumanObject.cs
+   Server.Library\MirObjects\HumanObject.cs
    private void Mirroring()
    ```
    
 5、道士召唤术可以召唤最多 10 个宝宝（可以设置成无限制）
 
    ```
-   Server\MirObjects\HumanObject.cs
+   Server.Library\MirObjects\HumanObject.cs
    private void SummonSkeleton()
    private void SummonShinsu()
    ```
@@ -53,7 +53,7 @@
 6、战士刀刀刺杀（未验证）
 
    ```
-   Server\MirObjects\HumanObject.cs
+   Server.Library\MirObjects\HumanObject.cs
    public void Attack() :Thrusting
    ```
 
@@ -65,14 +65,14 @@
    public static string ExtendYourRentalPeriod
    ```
    ```
-   Server\MirObjects\PlayerObject.cs
+   Server.Library\MirObjects\PlayerObject.cs
    public void Chat() :ADDSTORAGE
    ```
 
 12、物品持久保护（未验证）
 
    ```
-   Server\MirObjects\HumanObject.cs
+   Server.Library\MirObjects\HumanObject.cs
    private void DamageDura()
    public void DamageWeapon()
    public void DamageItem()
