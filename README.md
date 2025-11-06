@@ -26,7 +26,7 @@
 
 3、锁红锁蓝
 
-      红保护线设置为 10~20%，永不死亡 ![:-)](https://github.com/masmx86/crystal-mir2-modified/blob/main/smile.jpg)
+      红保护线设置为 10~20%，永不死亡
       蓝保护线设置为 5~10%
 
    ```
@@ -93,7 +93,7 @@
 14、增加打怪爆率及掉落物品种类
 
    ```
-   Server\Configs\MonsterDropRate.ini
+   Server\Envir\Drops\*.txt
    ```                     
                      
 ##### TODO：
