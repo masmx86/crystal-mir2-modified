@@ -2940,6 +2940,7 @@ namespace Server.MirEnvir
             // [hack] increase chance to get more stats on items
             //        by replacing Random.Next(x) == 0 with Random.Next(x) % 2 == 0
             //        and RandomomRange() with RandomomRangeHacked()
+            //        ------------------------------------------------
             //        我又改回原来的设定了，改了之后的爆率实在是太夸张了
             if (stat.MaxAcChance > 0 && Random.Next(stat.MaxAcChance) == 0) item.AddedStats[Stat.MaxAC] = (byte)(RandomomRange(stat.MaxAcMaxStat-1, stat.MaxAcStatChance)+1);
             if (stat.MaxMacChance > 0 && Random.Next(stat.MaxMacChance) == 0) item.AddedStats[Stat.MaxMAC] = (byte)(RandomomRange(stat.MaxMacMaxStat-1, stat.MaxMacStatChance)+1);
