@@ -3214,43 +3214,15 @@ namespace Server.MirObjects
             }
 
         Thrusting:
-            //if (spell == Spell.Thrusting)
-            //{
-            //    target = Functions.PointMove(target, dir, 1);
-
-            //    if (!CurrentMap.ValidPoint(target)) return;
-
-            //    cell = CurrentMap.GetCell(target);
-
-            //    if (cell.Objects == null) return;
-
-            //    for (int i = 0; i < cell.Objects.Count; i++)
-            //    {
-            //        MapObject ob = cell.Objects[i];
-            //        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) continue;
-            //        if (!ob.IsAttackTarget(this)) continue;
-
-            //        magic = GetMagic(spell);
-            //        damageFinal = magic.GetDamage(damageBase);
-            //        ob.Attacked(this, damageFinal,
-            //            ob is MonsterObject monster && (monster.Info.AI == 49) ? DefenceType.Repulsion : DefenceType.Agility, 
-            //            false);
-            //        break;
-            //    }
-            //}
-
             if (spell == Spell.Thrusting)
             {
-                // [hack] forced using thrusting all the time
-                
-                Point target1 = Functions.PointMove(target, dir, 1);
+                target = Functions.PointMove(target, dir, 1);
 
-                if (!CurrentMap.ValidPoint(target1)) return;
+                if (!CurrentMap.ValidPoint(target)) return;
 
                 cell = CurrentMap.GetCell(target);
-                Cell cell1 = CurrentMap.GetCell(target1);
 
-                if (cell1.Objects == null) return;
+                if (cell.Objects == null) return;
 
                 for (int i = 0; i < cell.Objects.Count; i++)
                 {
@@ -3265,20 +3237,50 @@ namespace Server.MirObjects
                         false);
                     break;
                 }
-                for (int i = 0; i < cell1.Objects.Count; i++)
-                {
-                    MapObject ob = cell1.Objects[i];
-                    if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) continue;
-                    if (!ob.IsAttackTarget(this)) continue;
-
-                    magic = GetMagic(spell);
-                    damageFinal = magic.GetDamage(damageBase);
-                    ob.Attacked(this, damageFinal,
-                        ob is MonsterObject monster && (monster.Info.AI == 49) ? DefenceType.Repulsion : DefenceType.Agility,
-                        false);
-                    break;
-                }
             }
+
+        // [hack] thrusting
+        // not here, this modified code will cause program exit on invalid point
+        //if (spell == Spell.Thrusting)
+        //{
+        //    // [hack] forced using thrusting all the time
+
+        //    Point target1 = Functions.PointMove(target, dir, 1);
+
+        //    if (!CurrentMap.ValidPoint(target1)) return;
+
+        //    cell = CurrentMap.GetCell(target);
+        //    Cell cell1 = CurrentMap.GetCell(target1);
+
+        //    if (cell1.Objects == null) return;
+
+        //    for (int i = 0; i < cell.Objects.Count; i++)
+        //    {
+        //        MapObject ob = cell.Objects[i];
+        //        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) continue;
+        //        if (!ob.IsAttackTarget(this)) continue;
+
+        //        magic = GetMagic(spell);
+        //        damageFinal = magic.GetDamage(damageBase);
+        //        ob.Attacked(this, damageFinal,
+        //            ob is MonsterObject monster && (monster.Info.AI == 49) ? DefenceType.Repulsion : DefenceType.Agility,
+        //            false);
+        //        break;
+        //    }
+        //    for (int i = 0; i < cell1.Objects.Count; i++)
+        //    {
+        //        MapObject ob = cell1.Objects[i];
+        //        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) continue;
+        //        if (!ob.IsAttackTarget(this)) continue;
+
+        //        magic = GetMagic(spell);
+        //        damageFinal = magic.GetDamage(damageBase);
+        //        ob.Attacked(this, damageFinal,
+        //            ob is MonsterObject monster && (monster.Info.AI == 49) ? DefenceType.Repulsion : DefenceType.Agility,
+        //            false);
+        //        break;
+        //    }
+        //}
 
         HalfMoon:
             if (spell == Spell.HalfMoon)

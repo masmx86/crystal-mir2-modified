@@ -53,7 +53,7 @@
    private void SummonShinsu()
    ```
 
-6、战士刀刀刺杀（未验证）
+6、~~战士刀刀刺杀（不是这里）~~
 
    ```
    Server.Library\MirObjects\HumanObject.cs
@@ -72,7 +72,7 @@
    public void Chat() :ADDSTORAGE
    ```
 
-12、物品持久保护（未验证）
+12、物品持久保护
 
    ```
    Server.Library\MirObjects\HumanObject.cs
@@ -81,7 +81,7 @@
    public void DamageItem()
    ```
 
-13、增加小极品物品掉落概率（未验证）
+13、增加小极品物品掉落概率
    ```
    Server.Library\MirEnvir\Envir.cs
    public void UpgradeItem()
