@@ -3222,11 +3222,7 @@ namespace Server.MirObjects
 
                 cell = CurrentMap.GetCell(target);
 
-<<<<<<< HEAD
                 if (cell.Objects == null) return;
-=======
-                //if (cell1.Objects == null) return;
->>>>>>> b525694d23c291e0b5373f0b7c6c4449ba1671b2
 
                 for (int i = 0; i < cell.Objects.Count; i++)
                 {
