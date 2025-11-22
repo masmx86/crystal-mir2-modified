@@ -81,15 +81,12 @@
    public void DamageItem()
    ```
 
-<<<<<<< HEAD
 13、增加小极品物品掉落概率
-=======
-13、~~增加小极品物品掉落概率~~
->>>>>>> b525694d23c291e0b5373f0b7c6c4449ba1671b2
    ```
    Server.Library\MirEnvir\Envir.cs
-   public void UpgradeItem()
-
+   public UserItem CreateDropItem()
+   public void UpgradeItemHacked()
+   
    Server\Configs\RandomItemStats.ini
 
    ```

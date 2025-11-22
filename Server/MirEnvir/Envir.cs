@@ -2858,7 +2858,7 @@ namespace Server.MirEnvir
                     CurrentDura = (ushort) Math.Min(info.Durability, Random.Next(info.Durability) + 1000)
                 };
 
-            UpgradeItem(item);
+            UpgradeItemHacked(item);
 
             UpdateItemExpiry(item);
 
@@ -2937,11 +2937,6 @@ namespace Server.MirEnvir
                 item.CurrentDura = (ushort)Math.Min(ushort.MaxValue, item.CurrentDura + dura * 1000);
             }
 
-            // [hack] increase chance to get more stats on items
-            //        by replacing Random.Next(x) == 0 with Random.Next(x) % 2 == 0
-            //        and RandomomRange() with RandomomRangeHacked()
-            //        ------------------------------------------------
-            //        我又改回原来的设定了，改了之后的爆率实在是太夸张了
             if (stat.MaxAcChance > 0 && Random.Next(stat.MaxAcChance) == 0) item.AddedStats[Stat.MaxAC] = (byte)(RandomomRange(stat.MaxAcMaxStat-1, stat.MaxAcStatChance)+1);
             if (stat.MaxMacChance > 0 && Random.Next(stat.MaxMacChance) == 0) item.AddedStats[Stat.MaxMAC] = (byte)(RandomomRange(stat.MaxMacMaxStat-1, stat.MaxMacStatChance)+1);
             if (stat.MaxDcChance > 0 && Random.Next(stat.MaxDcChance) == 0) item.AddedStats[Stat.MaxDC] = (byte)(RandomomRange(stat.MaxDcMaxStat-1, stat.MaxDcStatChance)+1);
@@ -2981,6 +2976,54 @@ namespace Server.MirEnvir
             var x = 0;
             for (var i = 0; i < count; i++) if (Random.Next(rate) == 0) x++;
             return x;
+        }
+
+        // [hack] increase chance to get more stats on items
+        //        by replacing Random.Next(x) == 0 with Random.Next(x) % 2 == 0
+        //        and RandomomRange() with RandomomRangeHacked()
+        public void UpgradeItemHacked(UserItem item)
+        {
+            if (item.Info.RandomStats == null) return;
+            var stat = item.Info.RandomStats;
+            if (stat.MaxDuraChance > 0 && Random.Next(stat.MaxDuraChance) == 0)
+            {
+                var dura = RandomomRange(stat.MaxDuraMaxStat, stat.MaxDuraStatChance);
+                item.MaxDura = (ushort)Math.Min(ushort.MaxValue, item.MaxDura + dura * 1000);
+                item.CurrentDura = (ushort)Math.Min(ushort.MaxValue, item.CurrentDura + dura * 1000);
+            }
+
+            if (stat.MaxAcChance > 0 && Random.Next(stat.MaxAcChance) % 2 == 0) item.AddedStats[Stat.MaxAC] = (byte)(RandomomRangeHacked(stat.MaxAcMaxStat - 1, stat.MaxAcStatChance) + 1);
+            if (stat.MaxMacChance > 0 && Random.Next(stat.MaxMacChance) % 2 == 0) item.AddedStats[Stat.MaxMAC] = (byte)(RandomomRangeHacked(stat.MaxMacMaxStat - 1, stat.MaxMacStatChance) + 1);
+            if (stat.MaxDcChance > 0 && Random.Next(stat.MaxDcChance) % 2 == 0) item.AddedStats[Stat.MaxDC] = (byte)(RandomomRangeHacked(stat.MaxDcMaxStat - 1, stat.MaxDcStatChance) + 1);
+            if (stat.MaxMcChance > 0 && Random.Next(stat.MaxMcChance) % 2 == 0) item.AddedStats[Stat.MaxMC] = (byte)(RandomomRangeHacked(stat.MaxMcMaxStat - 1, stat.MaxMcStatChance) + 1);
+            if (stat.MaxScChance > 0 && Random.Next(stat.MaxScChance) % 2 == 0) item.AddedStats[Stat.MaxSC] = (byte)(RandomomRangeHacked(stat.MaxScMaxStat - 1, stat.MaxScStatChance) + 1);
+            if (stat.AccuracyChance > 0 && Random.Next(stat.AccuracyChance) % 2 == 0) item.AddedStats[Stat.Accuracy] = (byte)(RandomomRangeHacked(stat.AccuracyMaxStat - 1, stat.AccuracyStatChance) + 1);
+            if (stat.AgilityChance > 0 && Random.Next(stat.AgilityChance) % 2 == 0) item.AddedStats[Stat.Agility] = (byte)(RandomomRangeHacked(stat.AgilityMaxStat - 1, stat.AgilityStatChance) + 1);
+            if (stat.HpChance > 0 && Random.Next(stat.HpChance) % 2 == 0) item.AddedStats[Stat.HP] = (byte)(RandomomRangeHacked(stat.HpMaxStat - 1, stat.HpStatChance) + 1);
+            if (stat.MpChance > 0 && Random.Next(stat.MpChance) % 2 == 0) item.AddedStats[Stat.MP] = (byte)(RandomomRangeHacked(stat.MpMaxStat - 1, stat.MpStatChance) + 1);
+            if (stat.StrongChance > 0 && Random.Next(stat.StrongChance) % 2 == 0) item.AddedStats[Stat.Strong] = (byte)(RandomomRangeHacked(stat.StrongMaxStat - 1, stat.StrongStatChance) + 1);
+            if (stat.MagicResistChance > 0 && Random.Next(stat.MagicResistChance) % 2 == 0) item.AddedStats[Stat.MagicResist] = (byte)(RandomomRangeHacked(stat.MagicResistMaxStat - 1, stat.MagicResistStatChance) + 1);
+            if (stat.PoisonResistChance > 0 && Random.Next(stat.PoisonResistChance) % 2 == 0) item.AddedStats[Stat.PoisonResist] = (byte)(RandomomRangeHacked(stat.PoisonResistMaxStat - 1, stat.PoisonResistStatChance) + 1);
+            if (stat.HpRecovChance > 0 && Random.Next(stat.HpRecovChance) % 2 == 0) item.AddedStats[Stat.HealthRecovery] = (byte)(RandomomRangeHacked(stat.HpRecovMaxStat - 1, stat.HpRecovStatChance) + 1);
+            if (stat.MpRecovChance > 0 && Random.Next(stat.MpRecovChance) % 2 == 0) item.AddedStats[Stat.SpellRecovery] = (byte)(RandomomRangeHacked(stat.MpRecovMaxStat - 1, stat.MpRecovStatChance) + 1);
+            if (stat.PoisonRecovChance > 0 && Random.Next(stat.PoisonRecovChance) % 2 == 0) item.AddedStats[Stat.PoisonRecovery] = (byte)(RandomomRangeHacked(stat.PoisonRecovMaxStat - 1, stat.PoisonRecovStatChance) + 1);
+            if (stat.CriticalRateChance > 0 && Random.Next(stat.CriticalRateChance) % 2 == 0) item.AddedStats[Stat.CriticalRate] = (byte)(RandomomRangeHacked(stat.CriticalRateMaxStat - 1, stat.CriticalRateStatChance) + 1);
+            if (stat.CriticalDamageChance > 0 && Random.Next(stat.CriticalDamageChance) % 2 == 0) item.AddedStats[Stat.CriticalDamage] = (byte)(RandomomRangeHacked(stat.CriticalDamageMaxStat - 1, stat.CriticalDamageStatChance) + 1);
+            if (stat.FreezeChance > 0 && Random.Next(stat.FreezeChance) % 2 == 0) item.AddedStats[Stat.Freezing] = (byte)(RandomomRangeHacked(stat.FreezeMaxStat - 1, stat.FreezeStatChance) + 1);
+            if (stat.PoisonAttackChance > 0 && Random.Next(stat.PoisonAttackChance) % 2 == 0) item.AddedStats[Stat.PoisonAttack] = (byte)(RandomomRangeHacked(stat.PoisonAttackMaxStat - 1, stat.PoisonAttackStatChance) + 1);
+            if (stat.AttackSpeedChance > 0 && Random.Next(stat.AttackSpeedChance) % 2 == 0) item.AddedStats[Stat.AttackSpeed] = (sbyte)(RandomomRangeHacked(stat.AttackSpeedMaxStat - 1, stat.AttackSpeedStatChance) + 1);
+            if (stat.LuckChance > 0 && Random.Next(stat.LuckChance) % 2 == 0) item.AddedStats[Stat.Luck] = (sbyte)(RandomomRangeHacked(stat.LuckMaxStat - 1, stat.LuckStatChance) + 1);
+            if (stat.CurseChance > 0 && Random.Next(100) <= stat.CurseChance) item.Cursed = true;
+
+            if (stat.SlotChance > 0 && Random.Next(stat.SlotChance) == 0)
+            {
+                var slot = (byte)(RandomomRange(stat.SlotMaxStat - 1, stat.SlotStatChance) + 1);
+
+                if (slot > item.Info.Slots)
+                {
+                    item.SetSlotSize(slot);
+                }
+            }
         }
 
         // [hack] increase chance to get more stats on items
