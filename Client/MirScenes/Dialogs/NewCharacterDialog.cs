@@ -6,7 +6,9 @@ namespace Client.MirScenes.Dialogs
 {
     public sealed class NewCharacterDialog : MirImageControl
     {
-        private static readonly Regex Reg = new Regex(@"^[A-Za-z0-9]|[\u4e00-\u9fa5]{" + Globals.MinCharacterNameLength + "," + Globals.MaxCharacterNameLength + "}$");
+        // [hack] allow charactername to use a mix of ascii and chinese characters
+        //private static readonly Regex Reg = new Regex(@"^[A-Za-z0-9]|[\u4e00-\u9fa5]{" + Globals.MinCharacterNameLength + "," + Globals.MaxCharacterNameLength + "}$");
+        private static readonly Regex Reg = new Regex(@"^[A-Za-z0-9\u4e00-\u9fa5]{" + Globals.MinCharacterNameLength + "," + Globals.MaxCharacterNameLength + "}$");
 
         public MirImageControl TitleLabel;
         public MirAnimatedControl CharacterDisplay;

@@ -2858,6 +2858,7 @@ namespace Server.MirEnvir
                     CurrentDura = (ushort) Math.Min(info.Durability, Random.Next(info.Durability) + 1000)
                 };
 
+            // [hack] increase chance of hacked items with more random stats
             UpgradeItemHacked(item);
 
             UpdateItemExpiry(item);

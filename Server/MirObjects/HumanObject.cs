@@ -5205,6 +5205,43 @@ namespace Server.MirObjects
             LevelMagic(magic);
             CounterAttack = false;
         }
+
+        // [hack] New Warrior Skill: WarriorMirroring
+        // Summons a clone of the warrior that mimics his attacks.
+        private void WarriorMirroring(UserMagic magic)
+        {
+            MonsterObject monster;
+            DelayedAction action;
+            for (int i = 0; i < Pets.Count; i++)
+            {
+                monster = Pets[i];
+                if ((monster.Info.Name != Settings.CloneName) || monster.Dead) continue;
+                if (monster.Node == null) continue;
+                // [hack] comment off this return & see what gonna happen :)
+                // action = new DelayedAction(DelayedType.Magic, Envir.Time + 500, this, magic, monster, Front, true);
+                // CurrentMap.ActionList.Add(action);
+                // return;
+                monster.ActionList.Add(new DelayedAction(DelayedType.Recall, Envir.Time + 500, this, magic, monster, Front, true));
+            }
+
+            // [hack] change pet quantity limit to 10
+            if (Pets.Count(x => x.Race == ObjectType.Monster) >= 10) return;
+
+            MonsterInfo info = Envir.GetMonsterInfo(Settings.CloneName);
+            if (info == null) return;
+
+            //LevelMagic(magic);
+
+            monster = MonsterObject.GetMonster(info);
+            monster.Master = this;
+            monster.ActionTime = Envir.Time + 1000;
+            monster.RefreshNameColour(false);
+
+            Pets.Add(monster);
+            action = new DelayedAction(DelayedType.Magic, Envir.Time + 500, this, magic, monster, Front, false);
+            CurrentMap.ActionList.Add(action);
+        }
+
         #endregion
 
         #region Assassin Skills
