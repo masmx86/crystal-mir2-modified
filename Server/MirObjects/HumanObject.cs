@@ -5171,6 +5171,16 @@ namespace Server.MirObjects
             MonsterObject monster;
             DelayedAction action;
 
+            ReceiveChat($"class: {Info.Class.ToString()}", ChatType.Hint);
+            ReceiveChat($"name:  {Info.Name}", ChatType.Hint);
+            ReceiveChat($"level: {Info.Level}", ChatType.Hint);
+            ReceiveChat($"hp:    {Info.Player.HP}", ChatType.Hint);
+            ReceiveChat($"mp:    {Info.Player.MP}", ChatType.Hint);
+            ReceiveChat($"pet#:  {Info.Pets.Count}", ChatType.Hint);
+            ReceiveChat($"hero#: {Info.Heroes.Length}", ChatType.Hint);
+            ReceiveChat($"magic#:{Info.Magics.Count}", ChatType.Hint);
+
+
             UserMagic mirroring = GetMagic(Spell.Mirroring);
             if (mirroring == null)
             {
@@ -5178,8 +5188,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            ReceiveChat("Attempting to summon or recall WarriorMirroring clone...", ChatType.System);
-            ReceiveChat($"Current pet count: {Pets.Count}", ChatType.System);
+            ReceiveChat("Attempting to summon or recall WarriorMirroring clone...", ChatType.Hint);
 
             for (int i = 0; i < Pets.Count; i++)
             {
