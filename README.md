@@ -97,6 +97,12 @@
    Server\Envir\Drops\*.txt
    ```                     
                      
+15、战士添加宝宝
+   ```
+   Server.Library\MirObjects\PlayerObject.cs
+   private void StartGameSuccess()
+   public void StopGame()
+   ```
 ##### TODO：
 
 道士自动换符、换毒药
