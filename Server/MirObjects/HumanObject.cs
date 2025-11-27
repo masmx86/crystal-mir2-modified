@@ -2778,21 +2778,31 @@ namespace Server.MirObjects
             if (target != null && !target.Dead && !target.IsFriendlyTarget(this))
             {
                 // [hack] add PMode.Both to allow Pets to attack around Master
-                if (this is PlayerObject player &&
-                   (player.PMode == PetMode.FocusMasterTarget || player.PMode == PetMode.Both))
+                if (this is PlayerObject player)
                 {
-                    foreach (MonsterObject pet in player.Pets)
+                    if (player.PMode == PetMode.FocusMasterTarget || player.PMode == PetMode.Both)
                     {
-                        if (pet.Race != ObjectType.Creature)
+                        foreach (MonsterObject pet in player.Pets)
                         {
-                            pet.Target = target;
+                            if (pet.Race != ObjectType.Creature)
+                            {
+                                pet.Target = target;
+                            }
+                        }
+
+                        if (player.HeroSpawned &&
+                            !player.Hero.Dead)
+                        {
+                            player.Hero.Target = target;
                         }
                     }
 
-                    if (player.HeroSpawned &&
-                        !player.Hero.Dead)
+                    if (player.Hero.Target != null)
                     {
-                        player.Hero.Target = target;
+                        foreach (MonsterObject pet in player.Pets)
+                        {
+                            pet.Target = player.Hero.Target;
+                        }
                     }
                 }
             }
