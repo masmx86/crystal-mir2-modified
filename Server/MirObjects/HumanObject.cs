@@ -2773,10 +2773,13 @@ namespace Server.MirObjects
 
             if (target != null && target.Race != ObjectType.Monster && target.Race != ObjectType.Player && target.Race != ObjectType.Hero) return;
 
-            if (target != null && !target.Dead && target.IsAttackTarget(this) && !target.IsFriendlyTarget(this))
+            // [hack] allow Pets to attack monsters around Master or attacking Hero
+            //if (target != null && !target.Dead && target.IsAttackTarget(this) && !target.IsFriendlyTarget(this))
+            if (target != null && !target.Dead && !target.IsFriendlyTarget(this))
             {
+                // [hack] add PMode.Both to allow Pets to attack around Master
                 if (this is PlayerObject player &&
-                   player.PMode == PetMode.FocusMasterTarget)
+                   (player.PMode == PetMode.FocusMasterTarget || player.PMode == PetMode.Both))
                 {
                     foreach (MonsterObject pet in player.Pets)
                     {
