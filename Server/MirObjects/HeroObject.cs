@@ -868,7 +868,11 @@ namespace Server.MirObjects
             RoamTime = Envir.Time + RoamDelay;
         }
         protected virtual void ProcessFriend() { }
-        protected virtual void ProcessAttack() { }
+        protected virtual void ProcessAttack() 
+        {
+            // [hack] call function ProcessTarget()
+            ProcessTarget();
+        }
         protected virtual void ProcessTarget()
         {
             if (CanCast && NextMagicSpell != Spell.None)
