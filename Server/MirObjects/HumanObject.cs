@@ -5172,7 +5172,14 @@ namespace Server.MirObjects
             DelayedAction action;
 
             UserMagic mirroring = GetMagic(Spell.Mirroring);
-            if (mirroring == null) return;
+            if (mirroring == null)
+            {
+                ReceiveChat("WarriorMirroring skill not found!", ChatType.System);
+                return;
+            }
+
+            ReceiveChat("Attempting to summon or recall WarriorMirroring clone...", ChatType.System);
+            ReceiveChat($"Current pet count: {Pets.Count}", ChatType.System);
 
             for (int i = 0; i < Pets.Count; i++)
             {
@@ -5184,6 +5191,7 @@ namespace Server.MirObjects
                 // CurrentMap.ActionList.Add(action);
                 // return;
                 monster.ActionList.Add(new DelayedAction(DelayedType.Recall, Envir.Time + 500, this, mirroring, monster, Front, true));
+                ReceiveChat($"Pet {i} clone recalled.", ChatType.System);
             }
 
             // [hack] change pet quantity limit to 10
@@ -5200,6 +5208,7 @@ namespace Server.MirObjects
             monster.RefreshNameColour(false);
 
             Pets.Add(monster);
+            ReceiveChat($"New clone summoned, total {Pets.Count} pets.", ChatType.System);
             action = new DelayedAction(DelayedType.Magic, Envir.Time + 500, this, mirroring, monster, Front, false);
             CurrentMap.ActionList.Add(action);
         }
