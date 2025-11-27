@@ -902,7 +902,7 @@ namespace Server.MirObjects
             HP += amount;
             HP = GMNeverDie ? Stats[Stat.HP] : HP;
 
-            // [hack] MP protection
+            // [hack] MP protection set to 10~20% of max HP
             // if (HP < 0) HP = 0;
 
             int hp_protection_vol = (int)(Stats[Stat.HP] * 0.10);
@@ -928,9 +928,9 @@ namespace Server.MirObjects
             MP += amount;
             MP = GMNeverDie ? Stats[Stat.MP] : MP;
 
-            // [hack] MP protection
+            // [hack] MP protection set to 10~20% of max MP
             // if (MP < 0) MP = 0;
-            int mp_protection_vol = (int) (Stats[Stat.MP] * 0.05);
+            int mp_protection_vol = (int) (Stats[Stat.MP] * 0.1);
             if (MP < mp_protection_vol)
             {
                 MP = mp_protection_vol + (int)Envir.Random.Next(mp_protection_vol);

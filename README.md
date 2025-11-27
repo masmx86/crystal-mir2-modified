@@ -27,7 +27,7 @@
 3、锁红锁蓝
 
       红保护线设置为 10~20%，永不死亡
-      蓝保护线设置为 5~10%
+      蓝保护线设置为 10~20%
 
    ```
    Server.Library\MirObjects\HumanObject.cs
