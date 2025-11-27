@@ -305,6 +305,9 @@ namespace Server.MirObjects
 
                             switch (Class)
                             {
+                                // [hack] save warrior pets on exit
+                                case (MirClass.Warrior):
+
                                 case (MirClass.Wizard):
 
                                     if (pet.Name == Settings.CloneName)
@@ -1217,6 +1220,8 @@ namespace Server.MirObjects
 
                         switch (Class)
                         {
+                            // [hack] add warrior pets
+                            case (MirClass.Warrior):
                             case (MirClass.Wizard):
 
                                 if (monster.Info.Name == Settings.CloneName)
