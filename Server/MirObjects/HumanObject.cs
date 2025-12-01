@@ -2797,6 +2797,7 @@ namespace Server.MirObjects
                         }
                     }
 
+                    // [hack] allow Pets to attack Hero's target
                     if (player.Hero.Target != null)
                     {
                         foreach (MonsterObject pet in player.Pets)

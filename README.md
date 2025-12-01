@@ -97,7 +97,7 @@
    Server\Envir\Drops\*.txt
    ```                     
                      
-15、战士添加宝宝
+15、战士添加宝宝（正在验证中...）
    ```
    Server.Library\MirObjects\PlayerObject.cs
    private void StartGameSuccess()
