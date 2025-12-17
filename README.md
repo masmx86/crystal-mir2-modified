@@ -9,6 +9,7 @@
 
    ```
    Client\MirScenes\GameScene.cs
+
    private bool CanRun()
    ```
    ```
@@ -31,6 +32,7 @@
 
    ```
    Server.Library\MirObjects\HumanObject.cs
+   
    public void ChangeHP()
    public void ChangeMP()
    ```
@@ -42,6 +44,7 @@
 
    ```
    Server.Library\MirObjects\HumanObject.cs
+   
    private void Mirroring()
    ```
    
@@ -49,6 +52,7 @@
 
    ```
    Server.Library\MirObjects\HumanObject.cs
+   
    private void SummonSkeleton()
    private void SummonShinsu()
    ```
@@ -57,6 +61,7 @@
 
    ```
    Server.Library\MirObjects\HumanObject.cs
+   
    public void Attack() :Thrusting
    ```
 
@@ -69,6 +74,7 @@
    ```
    ```
    Server.Library\MirObjects\PlayerObject.cs
+   
    public void Chat() :ADDSTORAGE
    ```
 
@@ -76,6 +82,7 @@
 
    ```
    Server.Library\MirObjects\HumanObject.cs
+   
    private void DamageDura()
    public void DamageWeapon()
    public void DamageItem()
@@ -84,6 +91,7 @@
 13、增加小极品物品掉落概率
    ```
    Server.Library\MirEnvir\Envir.cs
+   
    public UserItem CreateDropItem()
    public void UpgradeItemHacked()
    
@@ -100,9 +108,48 @@
 15、战士添加宝宝（正在验证中...）
    ```
    Server.Library\MirObjects\PlayerObject.cs
+   
    private void StartGameSuccess()
    public void StopGame()
    ```
+   ```
+   Server.Library\MirObjects\PlayerObject.cs
+   
+   public override void UseItem()
+       ......
+       UserItem item = null;
+       int index = -1;
+
+       for (int i = 0; i < Info.Inventory.Length; i++)
+       {
+           item = Info.Inventory[i];
+           if (item == null || item.UniqueID != id) continue;
+           index = i;
+           break;
+       }
+       if (item == null || index == -1 || !CanUseItem(item))
+       {
+           Enqueue(p);
+           return;
+       }
+       ......
+
+       switch (item.Info.Type)
+       {
+           case ItemType.Book:
+               UserMagic magic = new UserMagic((Spell)item.Info.Shape);
+               if (magic.Info == null)
+               {
+                   Enqueue(p);
+                   return;
+               }
+               Info.Magics.Add(magic);
+               SendMagicInfo(magic);
+               RefreshStats();
+               break;
+           ......
+   ```
+
 ##### TODO：
 
 道士自动换符、换毒药
