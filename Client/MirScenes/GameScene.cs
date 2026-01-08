@@ -1,17 +1,18 @@
 ﻿using Client.MirControls;
 using Client.MirGraphics;
+using Client.MirGraphics.Particles;
 using Client.MirNetwork;
 using Client.MirObjects;
+using Client.MirScenes.Dialogs;
 using Client.MirSounds;
+using Client.Utils;
 using SlimDX;
 using SlimDX.Direct3D9;
-using Font = System.Drawing.Font;
-using S = ServerPackets;
+using static System.Net.Mime.MediaTypeNames;
 using C = ClientPackets;
 using Effect = Client.MirObjects.Effect;
-using Client.MirScenes.Dialogs;
-using Client.Utils;
-using Client.MirGraphics.Particles;
+using Font = System.Drawing.Font;
+using S = ServerPackets;
 
 namespace Client.MirScenes
 {
@@ -10255,6 +10256,10 @@ namespace Client.MirScenes
 
         public void Process()
         {
+            // [hack]
+            // Update the form title to reflect the current character name.
+            Program.Form.Text = $"{GameLanguage.GameName} - {User.Name}";
+
             Processdoors();
             User.Process();
             for (int i = ObjectsList.Count - 1; i >= 0; i--)
