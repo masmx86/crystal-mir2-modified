@@ -150,6 +150,13 @@
            ......
    ```
 
+15. 主界面上添加时间显示
+   ```
+   Client\MirScenes\Dialogs\MainDialogs.cs
+   public void MainDialog.Process()
+   ```
+
+
 ##### TODO：
 
 道士自动换符、换毒药
