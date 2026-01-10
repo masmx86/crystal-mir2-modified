@@ -21,7 +21,14 @@ namespace Client.MirScenes.Dialogs
         public MirImageControl ExperienceBar, WeightBar, LeftCap, RightCap;
         public MirButton GameShopButton, MenuButton, InventoryButton, CharacterButton, SkillButton, QuestButton, OptionButton;
         public MirControl HealthOrb;
-        public MirLabel HealthLabel, ManaLabel, TopLabel, BottomLabel, LevelLabel, CharacterName, ExperienceLabel, GoldLabel, WeightLabel, SpaceLabel, AModeLabel, PModeLabel, SModeLabel;
+        public MirLabel HealthLabel, ManaLabel, TopLabel, BottomLabel, LevelLabel, CharacterName, 
+                        ExperienceLabel, 
+                        GoldLabel, WeightLabel, SpaceLabel, 
+                        AModeLabel, PModeLabel, SModeLabel;
+        
+        // [hack] add time display to main UI
+        public MirLabel ClockLabel;
+
         public HeroInfoPanel HeroInfoPanel;
         public HeroBehaviourPanel HeroBehaviourPanel;
 
@@ -251,6 +258,13 @@ namespace Client.MirScenes.Dialogs
                 Size = new Size(90, 16)
             };
 
+            // [hack] add time display to main UI
+            ClockLabel = new MirLabel
+            {
+                AutoSize = true,
+                Parent = this,
+                Location = new Point(this.Size.Width - 216, 125),
+            };
 
             ExperienceBar = new MirImageControl
             {
@@ -463,6 +477,9 @@ namespace Client.MirScenes.Dialogs
             CharacterName.Text = User.Name;
             SpaceLabel.Text = User.Inventory.Count(t => t == null).ToString();
             WeightLabel.Text = (MapObject.User.Stats[Stat.BagWeight] - MapObject.User.CurrentBagWeight).ToString();
+
+            // [kack] update time display
+            ClockLabel.Text = DateTime.Now.ToString("HH:mm:ss");
         }
 
         private void Label_SizeChanged(object sender, EventArgs e)
