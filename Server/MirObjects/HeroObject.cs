@@ -871,7 +871,7 @@ namespace Server.MirObjects
         protected virtual void ProcessAttack() 
         {
             // [hack] call function ProcessTarget()
-            ProcessTarget();
+            // ProcessTarget();
         }
         protected virtual void ProcessTarget()
         {
