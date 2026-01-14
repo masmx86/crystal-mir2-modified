@@ -3573,7 +3573,6 @@ namespace Server.MirObjects
                     break;
                 case Spell.ImmortalSkin:
                     ImmortalSkin(magic, out cast);
-                    WarriorMirroring(magic);
                     break;
                 case Spell.FireBang:
                 case Spell.IceStorm:
@@ -3638,6 +3637,10 @@ namespace Server.MirObjects
                     Purification(target, magic);
                     break;
                 case Spell.LionRoar:
+                    // [hack] add mirroring function to warrior lion roar
+                    CurrentMap.ActionList.Add(new DelayedAction(DelayedType.Magic, Envir.Time + 500, this, magic, CurrentLocation));
+                    WarriorMirroring(magic);
+                    break;
                 case Spell.BattleCry:
                     CurrentMap.ActionList.Add(new DelayedAction(DelayedType.Magic, Envir.Time + 500, this, magic, CurrentLocation));
                     break;
