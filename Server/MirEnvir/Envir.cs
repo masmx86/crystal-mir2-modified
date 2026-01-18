@@ -2997,6 +2997,7 @@ namespace Server.MirEnvir
                 item.CurrentDura = (ushort)Math.Min(ushort.MaxValue, item.CurrentDura + dura * 1000);
             }
 
+            
             ItemGrade grade = item.Info.Grade;
 
             bool hasDC = item.Info.Stats[Stat.MaxDC] > 0 ? true : false;
@@ -3038,15 +3039,15 @@ namespace Server.MirEnvir
                 (RandomomRange(stat.MaxScMaxStat - 1, stat.MaxScStatChance) + 1);
 
 
-            if (stat.MaxDcChance > 0 && Random.Next(stat.MaxDcChance) % 2 == 0)
+            if (hasDC && stat.MaxDcChance > 0 && Random.Next(stat.MaxDcChance) % 2 == 0)
             {
                 item.AddedStats[Stat.MaxDC] = (byte) Math.Min(extraDC, stat.MaxDcMaxStat);
             }
-            if (stat.MaxMcChance > 0 && Random.Next(stat.MaxMcChance) % 2 == 0)
+            if (hasMC && stat.MaxMcChance > 0 && Random.Next(stat.MaxMcChance) % 2 == 0)
             {
                 item.AddedStats[Stat.MaxMC] = (byte)Math.Min(extraMC, stat.MaxMcMaxStat);
             }
-            if (stat.MaxScChance > 0 && Random.Next(stat.MaxScChance) % 2 == 0)
+            if (hasSC && stat.MaxScChance > 0 && Random.Next(stat.MaxScChance) % 2 == 0)
             {
                 item.AddedStats[Stat.MaxSC] = (byte)Math.Min(extraSC, stat.MaxScMaxStat);
             }
