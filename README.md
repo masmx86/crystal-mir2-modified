@@ -156,6 +156,15 @@
    public void MainDialog.Process()
    ```
 
+16. 增加角色名称可用字符集范围
+   ```
+   Client\MirScenes\Dialogs\NewCharacterDialog.cs
+   public sealed class NewCharacterDialog : MirImageControl{}
+
+   Server.Library\MirEnvir\Envir.cs
+   static Envir()
+   ```
+
 
 ##### TODO：
 
