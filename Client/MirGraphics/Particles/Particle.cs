@@ -150,7 +150,9 @@ namespace Client.MirGraphics.Particles
             }
             catch (Exception e)
             {
-                throw e;
+                // [debug] fix by copilot
+                //throw e;
+                throw;
             }
         }
 

@@ -257,7 +257,8 @@ namespace Client.MirScenes.Dialogs
             {
                 DrawFormat = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
                 Parent = this,
-                Location = new Point(6, 120),
+                // [hack] adjust location from 120 to 125 to better center the name
+                Location = new Point(6, 125),
                 Size = new Size(90, 16)
             };
 
@@ -274,7 +275,7 @@ namespace Client.MirScenes.Dialogs
             {
                 AutoSize = true,
                 Parent = this,
-                Location = new Point(320, 125),
+                Location = new Point(160, 125),
             };
 
             ExperienceBar = new MirImageControl
@@ -493,7 +494,7 @@ namespace Client.MirScenes.Dialogs
             ClockLabel.Text = DateTime.Now.ToString("HH:mm:ss");
 
             // [hack] update user info display
-            UserInfoLabel.Text = string.Format("Inventory: {0}|{1} Magics: {2} Spell: {3}", User.Inventory.Length, MapObject.Hero.Inventory.Length, User.Magics.Count, User.Spell.ToString());
+            UserInfoLabel.Text = string.Format("Inventory: {0}|{1} Magics: {2} Spell: {3}", User.Inventory.Count(t => t == null), User.Inventory.Length, User.Magics.Count, User.Spell.ToString());
         }
 
         private void Label_SizeChanged(object sender, EventArgs e)
