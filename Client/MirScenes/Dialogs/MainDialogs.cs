@@ -29,6 +29,9 @@ namespace Client.MirScenes.Dialogs
         // [hack] add time display to main UI
         public MirLabel ClockLabel;
 
+        // [hack] add user info display to main UI
+        public MirLabel UserInfoLabel;
+
         public HeroInfoPanel HeroInfoPanel;
         public HeroBehaviourPanel HeroBehaviourPanel;
 
@@ -266,6 +269,14 @@ namespace Client.MirScenes.Dialogs
                 Location = new Point(this.Size.Width - 216, 125),
             };
 
+            // [hack] add user info display to main UI
+            UserInfoLabel = new MirLabel
+            {
+                AutoSize = true,
+                Parent = this,
+                Location = new Point(320, 125),
+            };
+
             ExperienceBar = new MirImageControl
             {
                 Index = Settings.Resolution != 800 ? 8 : 7,
@@ -480,6 +491,9 @@ namespace Client.MirScenes.Dialogs
 
             // [kack] update time display
             ClockLabel.Text = DateTime.Now.ToString("HH:mm:ss");
+
+            // [hack] update user info display
+            UserInfoLabel.Text = string.Format("Inventory: {0}|{1} Magics: {2} Spell: {3}", User.Inventory.Length, MapObject.Hero.Inventory.Length, User.Magics.Count, User.Spell.ToString());
         }
 
         private void Label_SizeChanged(object sender, EventArgs e)
