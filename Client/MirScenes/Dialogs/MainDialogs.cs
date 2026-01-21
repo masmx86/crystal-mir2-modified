@@ -494,7 +494,9 @@ namespace Client.MirScenes.Dialogs
             ClockLabel.Text = DateTime.Now.ToString("HH:mm:ss");
 
             // [hack] update user info display
-            UserInfoLabel.Text = string.Format("Inventory: {0}|{1} Magics: {2} Spell: {3}", User.Inventory.Count(t => t == null), User.Inventory.Length, User.Magics.Count, User.Spell.ToString());
+            UserInfoLabel.Text = string.Format("攻击： {0} 魔法： {1} 道术： {2} 防御： {3} 魔御： {4} 幸运： {5} 准确： {6} 闪避： {7} 攻击速度：{8}",
+                User.Stats[Stat.MaxDC], User.Stats[Stat.MaxMC], User.Stats[Stat.MaxSC], User.Stats[Stat.MaxAC], User.Stats[Stat.MaxMAC],
+                User.Stats[Stat.Luck], User.Stats[Stat.Accuracy], User.Stats[Stat.Agility], User.Stats[Stat.AttackSpeed]);
         }
 
         private void Label_SizeChanged(object sender, EventArgs e)
