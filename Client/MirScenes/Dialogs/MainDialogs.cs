@@ -483,8 +483,11 @@ namespace Client.MirScenes.Dialogs
             }
 
             LevelLabel.Text = User.Level.ToString();
-            ExperienceLabel.Text = string.Format("{0:#0.##%}", User.Experience / (double)User.MaxExperience);
-            ExperienceLabel.Location = new Point((ExperienceBar.Size.Width / 2) - 20, -10);
+
+			// [hack] adjust experience display to show percentage
+            ExperienceLabel.Text = string.Format("[ {0:#0.##%} ] < {1} / {2} >", User.Experience / (double)User.MaxExperience, User.Experience, (double)User.MaxExperience);
+            
+			ExperienceLabel.Location = new Point((ExperienceBar.Size.Width / 2) - 20, -10);
             GoldLabel.Text = GameScene.Gold.ToString("###,###,##0");
             CharacterName.Text = User.Name;
             SpaceLabel.Text = User.Inventory.Count(t => t == null).ToString();
