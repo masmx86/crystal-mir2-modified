@@ -32,6 +32,9 @@ namespace Client.MirScenes.Dialogs
         // [hack] add user info display to main UI
         public MirLabel UserInfoLabel;
 
+        // [hack] add user action display to main UI
+        public MirLabel UserActionLabel;
+
         public HeroInfoPanel HeroInfoPanel;
         public HeroBehaviourPanel HeroBehaviourPanel;
 
@@ -258,7 +261,7 @@ namespace Client.MirScenes.Dialogs
                 DrawFormat = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
                 Parent = this,
                 // [hack] adjust location from 120 to 125 to better center the name
-                Location = new Point(6, 125),
+                Location = new Point(6, 120),
                 Size = new Size(90, 16)
             };
 
@@ -275,8 +278,16 @@ namespace Client.MirScenes.Dialogs
             {
                 AutoSize = true,
                 Parent = this,
-                Location = new Point(160, 125),
+                Location = new Point(240, 125),
             };
+
+            // [hack] add user action display to main UI
+            UserActionLabel = new MirLabel
+            {
+                AutoSize = true,
+                Parent = this,
+                Location = new Point(200, 125),
+            }; 
 
             ExperienceBar = new MirImageControl
             {
@@ -503,6 +514,16 @@ namespace Client.MirScenes.Dialogs
             UserInfoLabel.Text = string.Format("攻击： {0} 魔法： {1} 道术： {2} 防御： {3} 魔御： {4} 幸运： {5} ",
                 User.Stats[Stat.MaxDC], User.Stats[Stat.MaxMC], User.Stats[Stat.MaxSC], 
                 User.Stats[Stat.MaxAC], User.Stats[Stat.MaxMAC], User.Stats[Stat.Luck]);
+            
+            // [hack] adjust user action display location
+            UserActionLabel.Location = new Point(UserInfoLabel.Location.X + UserInfoLabel.Size.Width + 10, 125);
+        }
+
+        public void UpdateUserAction(string action)
+        {
+            UserActionLabel.Text = action;
+            //int allowedWidth = ClockLabel.Location.X - UserInfoLabel.Location.X -20;
+            //UserActionLabel.Size = UserActionLabel.Size <= allowedWidth ? UserActionLabel.Size : new Size(allowedWidth, UserActionLabel.Size.Height);
         }
 
         private void Label_SizeChanged(object sender, EventArgs e)

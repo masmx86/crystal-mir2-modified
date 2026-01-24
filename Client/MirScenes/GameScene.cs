@@ -8,6 +8,7 @@ using Client.MirSounds;
 using Client.Utils;
 using SlimDX;
 using SlimDX.Direct3D9;
+using System.Runtime.InteropServices.Marshalling;
 using static System.Net.Mime.MediaTypeNames;
 using C = ClientPackets;
 using Effect = Client.MirObjects.Effect;
@@ -2806,7 +2807,44 @@ namespace Client.MirScenes
             cell.Locked = false;
 
             if (!p.Success) return;
-            if (cell.Item.Count > 1) cell.Item.Count--;
+            if (cell.Item.Count > 1)
+            {
+                    
+                cell.Item.Count--;
+                // [hack] do not decrement arrows or bolts
+                bool item_protected = false;
+                switch(cell.Item.Info.Type)
+                {
+                    case ItemType.Potion:
+                        switch(cell.Item.Info.Shape)
+                        {
+                            case 0: // normal portion
+                                //cell.Item.Count++;
+                                //item_protected = true;
+                                break;
+                            case 1: // sun portion
+                                //cell.Item.Count++;
+                                //item_protected = true;
+                                break;
+                            default:
+                                return;
+                        }
+                        break;
+                    case ItemType.Amulet:
+                        //cell.Item.Count++;
+                        //item_protected = true;
+                        break;
+                }
+                if (item_protected)
+                {
+                    ChatDialog.ReceiveChat(string.Format("item protected: type [{0}] shape [{0}]", cell.Item.Info.Type, cell.Item.Info.Shape), ChatType.Hint);
+                }
+                else
+                {
+                    ChatDialog.ReceiveChat(string.Format("item used: type [{0}] shape [{0}]", cell.Item.Info.Type, cell.Item.Info.Shape), ChatType.Hint);
+                }
+                // [end hack]
+            }
             else cell.Item = null;
             if (hero)
                 Hero.RefreshStats();
