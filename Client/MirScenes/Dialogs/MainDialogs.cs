@@ -278,7 +278,7 @@ namespace Client.MirScenes.Dialogs
             {
                 AutoSize = true,
                 Parent = this,
-                Location = new Point(240, 125),
+                Location = new Point(226, 125),
             };
 
             // [hack] add user action display to main UI
@@ -495,10 +495,17 @@ namespace Client.MirScenes.Dialogs
 
             LevelLabel.Text = User.Level.ToString();
 
-			// [hack] adjust experience display to show percentage
-            ExperienceLabel.Text = string.Format("[ {0:#0.##%} ] < {1} / {2} >", User.Experience / (double)User.MaxExperience, User.Experience, (double)User.MaxExperience);
-            
-			ExperienceLabel.Location = new Point((ExperienceBar.Size.Width / 2) - 20, -10);
+            // [hack] adjust experience display to show percentage
+            ExperienceLabel.Text = string.Format("{0:#0.####%}", User.Experience / (double)User.MaxExperience);
+
+            GameScene.Scene.ChatControl.CurrentExperienceValue.Text = User.Experience.ToString("#,##0");
+            GameScene.Scene.ChatControl.CurrentExperienceValue.Location = new Point(GameScene.Scene.ChatControl.Size.Width / 2 - GameScene.Scene.ChatControl.CurrentExperienceValue.Size.Width - 15, GameScene.Scene.ChatControl.CurrentExperienceValue.Location.Y);
+
+            GameScene.Scene.ChatControl.MaxExperienceValue.Text = User.MaxExperience.ToString("#,##0");
+            GameScene.Scene.ChatControl.MaxExperienceValue.Location = new Point((GameScene.Scene.ChatControl.Size.Width / 2) + 18, GameScene.Scene.ChatControl.MaxExperienceValue.Location.Y);
+            // [hack] end
+
+            ExperienceLabel.Location = new Point((ExperienceBar.Size.Width / 2) - 20, -10);
             GoldLabel.Text = GameScene.Gold.ToString("###,###,##0");
             CharacterName.Text = User.Name;
             SpaceLabel.Text = User.Inventory.Count(t => t == null).ToString();
@@ -511,7 +518,7 @@ namespace Client.MirScenes.Dialogs
             //UserInfoLabel.Text = string.Format("攻击： {0} 魔法： {1} 道术： {2} 防御： {3} 魔御： {4} 幸运： {5} 准确： {6} 闪避： {7} 攻击速度：{8}",
             //    User.Stats[Stat.MaxDC], User.Stats[Stat.MaxMC], User.Stats[Stat.MaxSC], User.Stats[Stat.MaxAC], User.Stats[Stat.MaxMAC],
             //    User.Stats[Stat.Luck], User.Stats[Stat.Accuracy], User.Stats[Stat.Agility], User.Stats[Stat.AttackSpeed]);
-            UserInfoLabel.Text = string.Format("攻击： {0} 魔法： {1} 道术： {2} 防御： {3} 魔御： {4} 幸运： {5} ",
+            UserInfoLabel.Text = string.Format("攻： {0} 魔： {1} 道： {2} 防： {3} 魔御： {4} 幸运： {5}",
                 User.Stats[Stat.MaxDC], User.Stats[Stat.MaxMC], User.Stats[Stat.MaxSC], 
                 User.Stats[Stat.MaxAC], User.Stats[Stat.MaxMAC], User.Stats[Stat.Luck]);
             
@@ -1300,11 +1307,37 @@ namespace Client.MirScenes.Dialogs
     {
         public MirButton SizeButton, SettingsButton, NormalButton, ShoutButton, WhisperButton, LoverButton, MentorButton, GroupButton, GuildButton, ReportButton, TradeButton;
 
+        // [hack] adjust experience display to show current and max experience values
+        public MirLabel CurrentExperienceValue;
+        public MirLabel MaxExperienceValue;
+
         public ChatControlBar()
         {
             Index = Settings.Resolution != 800 ? 2034 : 2035;
             Library = Libraries.Prguse;
             Location = new Point(GameScene.Scene.MainDialog.Location.X + 230, Settings.ScreenHeight - 112);
+
+            // [hack] adjust experience display to show current and max experience values
+            CurrentExperienceValue = new MirLabel
+            {
+                AutoSize = true,
+                Location = new Point(Location.X/2 - 20, 0),
+                Parent = this,
+                ForeColour = Color.White,
+                OutLine = true,
+                Text = "0",
+            };
+
+            MaxExperienceValue = new MirLabel
+            {
+                AutoSize = true,
+                Location = new Point(Location.X / 2 + 20, 0),
+                Parent = this,
+                ForeColour = Color.White,
+                OutLine = true,
+                Text = "0",
+            };
+            // [hack] end
 
             SizeButton = new MirButton
             {
