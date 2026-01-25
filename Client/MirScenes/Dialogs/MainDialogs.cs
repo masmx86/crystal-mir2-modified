@@ -278,7 +278,7 @@ namespace Client.MirScenes.Dialogs
             {
                 AutoSize = true,
                 Parent = this,
-                Location = new Point(226, 125),
+                Location = new Point(228, 125),
             };
 
             // [hack] add user action display to main UI

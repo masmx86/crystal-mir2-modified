@@ -216,6 +216,9 @@ namespace Server.MirObjects
         public long LastRevivalTime;
         public float HpDrain = 0;
 
+        // [hack] last poison used
+        protected short lastUsedPoison; // short ItemInfo.Shape
+
         public bool UnlockCurse = false;
         public bool FastRun = false;
         public bool CanGainExp = true;
@@ -3637,9 +3640,7 @@ namespace Server.MirObjects
                     Purification(target, magic);
                     break;
                 case Spell.LionRoar:
-                    // [hack] add mirroring function to warrior lion roar
                     CurrentMap.ActionList.Add(new DelayedAction(DelayedType.Magic, Envir.Time + 500, this, magic, CurrentLocation));
-                    WarriorMirroring(magic);
                     break;
                 case Spell.BattleCry:
                     CurrentMap.ActionList.Add(new DelayedAction(DelayedType.Magic, Envir.Time + 500, this, magic, CurrentLocation));
@@ -4333,6 +4334,7 @@ namespace Server.MirObjects
             ConsumeItem(item, 1);
             return true;
         }
+
         private bool SoulFireball(MapObject target, UserMagic magic, out bool cast)
         {
             cast = false;
@@ -6858,20 +6860,65 @@ namespace Server.MirObjects
         }
         protected UserItem GetPoison(int count, byte shape = 0)
         {
+            // [comment] 
+            // param shape = 0  doesn't specify poison type
+            //       shape = 1  green poison
+            //       shape = 2  red posin
+            UserItem item;
             for (int i = 0; i < Info.Equipment.Length; i++)
             {
-                UserItem item = Info.Equipment[i];
+                item = Info.Equipment[i];
                 if (item != null && item.Info.Type == ItemType.Amulet && item.Count >= count)
                 {
                     if (shape == 0)
                     {
                         if (item.Info.Shape == 1 || item.Info.Shape == 2)
+                        {
+                            lastUsedPoison = item.Info.Shape;
                             return item;
+                        }
                     }
                     else
                     {
                         if (item.Info.Shape == shape)
+                        {
+                            lastUsedPoison = item.Info.Shape;
                             return item;
+                        }
+                    }
+                }
+            }
+
+            // if specified poison type not found in inventory then return null
+            if (shape != 0)
+                return null;
+
+            // if last used poison is green poison, then find red poison next
+            // vise versa
+            // so the green and red poison will be used alternately
+            short next_poison_type = lastUsedPoison == 1 ? (short)2 : (short)1;
+            for (int i = 0; i < Info.Inventory.Length; i++)
+            {
+                item = Info.Inventory[i];
+                if (item != null && item.Info.Type == ItemType.Amulet && item.Count >= count)
+                {
+                    if (item.Info.Shape == next_poison_type)
+                    { 
+                        lastUsedPoison = item.Info.Shape;
+                        return item;
+                    }
+                }
+            }
+            // now we do the 2nd round
+            for (int i = 0; i < Info.Inventory.Length; i++)
+            {
+                item = Info.Inventory[i];
+                if (item != null && item.Info.Type == ItemType.Amulet && item.Count >= count)
+                {
+                    if (item.Info.Shape == lastUsedPoison)
+                    {
+                        lastUsedPoison = item.Info.Shape;
+                        return item;
                     }
                 }
             }

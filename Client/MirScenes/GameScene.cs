@@ -2843,7 +2843,7 @@ namespace Client.MirScenes
                 {
                     ChatDialog.ReceiveChat(string.Format("item used: type [{0}] shape [{0}]", cell.Item.Info.Type, cell.Item.Info.Shape), ChatType.Hint);
                 }
-                // [end hack]
+                // [hack] end
             }
             else cell.Item = null;
             if (hero)
