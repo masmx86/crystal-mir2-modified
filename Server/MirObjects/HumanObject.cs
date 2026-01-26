@@ -7902,7 +7902,6 @@ namespace Server.MirObjects
             // item.CurrentDura = (ushort)Math.Max(ushort.MinValue, item.CurrentDura - amount);
             // [hack] now we change the chance of reducing item durability from 100% to 50%
             // other 50% chance item durability will increase haha
-            ushort oldDura = item.CurrentDura;
             if (Envir.Random.Next(100) < 50)
             {
                 item.CurrentDura = (ushort)Math.Max(ushort.MinValue, item.CurrentDura - amount);
@@ -7912,8 +7911,7 @@ namespace Server.MirObjects
                 item.CurrentDura = (ushort)Math.Min(item.MaxDura, item.CurrentDura + amount);
             }
 
-            //item.DuraChanged = true;
-            item.DuraChanged = item.CurrentDura == oldDura;
+            item.DuraChanged = true;
             // [hack] end
 
             if (item.CurrentDura > 0 && isChanged != true) return;

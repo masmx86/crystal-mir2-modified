@@ -1061,15 +1061,35 @@ namespace Server.MirObjects
                 OwnerTime = Envir.Time + Settings.Minute,
             };
 
-            if (!item.Info.GlobalDropNotify)
-                return ob.Drop(Settings.DropRange);
+            // [hack] try auto harvest
+            //if (!item.Info.GlobalDropNotify)
+            //    return ob.Drop(Settings.DropRange);
 
-            foreach (var player in Envir.Players)
+            //foreach (var player in Envir.Players)
+            //{
+            //    player.ReceiveChat($"{Name} has dropped {item.FriendlyName}.", ChatType.System2);
+            //}
+
+            //return ob.Drop(Settings.DropRange);
+
+            // now do the drop logic
+            bool dropped = ob.Drop(Settings.DropRange);
+            if(dropped && item.Info.GlobalDropNotify)
             {
-                player.ReceiveChat($"{Name} has dropped {item.FriendlyName}.", ChatType.System2);
+                foreach (var player in Envir.Players)
+                {
+                    player.ReceiveChat($"{Name} has dropped {item.FriendlyName}.", ChatType.System2);
+                }
             }
 
-            return ob.Drop(Settings.DropRange);
+            // try auto harvest
+            // not working, need to figure out how to auto harvest properly
+            if (dropped && this is HarvestMonster)
+            {
+                return this.Harvest((PlayerObject) EXPOwner);
+            }
+            return dropped;
+            // [hack] end
         }
 
         protected virtual bool DropGold(uint gold)

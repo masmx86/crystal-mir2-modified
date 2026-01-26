@@ -26,14 +26,12 @@ namespace Client.MirScenes.Dialogs
                         GoldLabel, WeightLabel, SpaceLabel, 
                         AModeLabel, PModeLabel, SModeLabel;
         
-        // [hack] add time display to main UI
-        public MirLabel ClockLabel;
-
         // [hack] add user info display to main UI
         public MirLabel UserInfoLabel;
+        public MirLabel UserStatusLabel;
 
         // [hack] add user action display to main UI
-        public MirLabel UserActionLabel;
+        //public MirLabel UserActionLabel;
 
         public HeroInfoPanel HeroInfoPanel;
         public HeroBehaviourPanel HeroBehaviourPanel;
@@ -265,29 +263,31 @@ namespace Client.MirScenes.Dialogs
                 Size = new Size(90, 16)
             };
 
-            // [hack] add time display to main UI
-            ClockLabel = new MirLabel
-            {
-                AutoSize = true,
-                Parent = this,
-                Location = new Point(this.Size.Width - 216, 125),
-            };
-
             // [hack] add user info display to main UI
             UserInfoLabel = new MirLabel
             {
                 AutoSize = true,
                 Parent = this,
                 Location = new Point(228, 125),
+                NotControl = true,
             };
 
-            // [hack] add user action display to main UI
-            UserActionLabel = new MirLabel
+            UserStatusLabel = new MirLabel
             {
                 AutoSize = true,
                 Parent = this,
-                Location = new Point(200, 125),
-            }; 
+                Location = new Point(428, 125),
+                NotControl = true,
+            };
+
+            // [hack] add user action display to main UI
+            //UserActionLabel = new MirLabel
+            //{
+            //    AutoSize = true,
+            //    Parent = this,
+            //    Location = new Point(200, 125),
+            //    NotControl = true,
+            //}; 
 
             ExperienceBar = new MirImageControl
             {
@@ -512,7 +512,8 @@ namespace Client.MirScenes.Dialogs
             WeightLabel.Text = (MapObject.User.Stats[Stat.BagWeight] - MapObject.User.CurrentBagWeight).ToString();
 
             // [kack] update time display
-            ClockLabel.Text = DateTime.Now.ToString("HH:mm:ss");
+            GameScene.Scene.ChatControl.ClockLabel.Text = DateTime.Now.ToString("HH:mm:ss");
+            GameScene.Scene.ChatControl.ClockLabel.Location = new Point(GameScene.Scene.ChatControl.SizeButton.Location.X - GameScene.Scene.ChatControl.ClockLabel.Size.Width - 10, GameScene.Scene.ChatControl.ClockLabel.Location.Y);
 
             // [hack] update user info display
             //UserInfoLabel.Text = string.Format("攻击： {0} 魔法： {1} 道术： {2} 防御： {3} 魔御： {4} 幸运： {5} 准确： {6} 闪避： {7} 攻击速度：{8}",
@@ -521,17 +522,32 @@ namespace Client.MirScenes.Dialogs
             UserInfoLabel.Text = string.Format("攻： {0} 魔： {1} 道： {2} 防： {3} 魔御： {4} 幸运： {5}",
                 User.Stats[Stat.MaxDC], User.Stats[Stat.MaxMC], User.Stats[Stat.MaxSC], 
                 User.Stats[Stat.MaxAC], User.Stats[Stat.MaxMAC], User.Stats[Stat.Luck]);
-            
+
+
+            UserStatusLabel.Text = string.Format("[W] {0:#0.00} [A] {1:#0.00} [H] {2:#0.00} [B] {3:#0.00} / {4:#0.00} [R] {5:#0.00} / {6:#0.00} [A] {7}",
+                User.Equipment[(int)EquipmentSlot.Weapon] != null ? (float) User.Equipment[(int)EquipmentSlot.Weapon].CurrentDura / 1000 : 0,
+                User.Equipment[(int)EquipmentSlot.Armour] != null ? (float) User.Equipment[(int)EquipmentSlot.Armour].CurrentDura / 1000 : 0,
+                User.Equipment[(int)EquipmentSlot.Helmet] != null ? (float) User.Equipment[(int)EquipmentSlot.Helmet].CurrentDura / 1000 : 0,
+                User.Equipment[(int)EquipmentSlot.BraceletL] != null ? (float) User.Equipment[(int)EquipmentSlot.BraceletL].CurrentDura / 1000 : 0,
+                User.Equipment[(int)EquipmentSlot.BraceletR] != null ? (float) User.Equipment[(int)EquipmentSlot.BraceletR].CurrentDura / 1000 : 0,
+                User.Equipment[(int)EquipmentSlot.RingL] != null ? (float) User.Equipment[(int)EquipmentSlot.RingL].CurrentDura / 1000 : 0,
+                User.Equipment[(int)EquipmentSlot.RingR] != null ? (float) User.Equipment[(int)EquipmentSlot.RingR].CurrentDura / 1000 : 0,
+                User.Equipment[(int)EquipmentSlot.Amulet] != null ? User.Equipment[(int)EquipmentSlot.Amulet].Count : 0
+                );
+            UserStatusLabel.Location = new Point( ExperienceLabel.Location.X + ExperienceLabel.Size.Width + 20, UserInfoLabel.Location.Y);
+
             // [hack] adjust user action display location
-            UserActionLabel.Location = new Point(UserInfoLabel.Location.X + UserInfoLabel.Size.Width + 10, 125);
+            //UserActionLabel.Location = new Point(UserInfoLabel.Location.X + UserInfoLabel.Size.Width + 10, 125);
+
+            //GameScene.Scene.ChatDialog.ReceiveChat(UserStatusLabel.Text, ChatType.Hint);
         }
 
-        public void UpdateUserAction(string action)
-        {
-            UserActionLabel.Text = action;
-            //int allowedWidth = ClockLabel.Location.X - UserInfoLabel.Location.X -20;
-            //UserActionLabel.Size = UserActionLabel.Size <= allowedWidth ? UserActionLabel.Size : new Size(allowedWidth, UserActionLabel.Size.Height);
-        }
+        //public void UpdateUserAction(string action)
+        //{
+        //    UserActionLabel.Text = action;
+        //    //int allowedWidth = ClockLabel.Location.X - UserInfoLabel.Location.X -20;
+        //    //UserActionLabel.Size = UserActionLabel.Size <= allowedWidth ? UserActionLabel.Size : new Size(allowedWidth, UserActionLabel.Size.Height);
+        //}
 
         private void Label_SizeChanged(object sender, EventArgs e)
         {
@@ -1307,6 +1323,9 @@ namespace Client.MirScenes.Dialogs
     {
         public MirButton SizeButton, SettingsButton, NormalButton, ShoutButton, WhisperButton, LoverButton, MentorButton, GroupButton, GuildButton, ReportButton, TradeButton;
 
+        // [hack] add time display to main UI
+        public MirLabel ClockLabel;
+
         // [hack] adjust experience display to show current and max experience values
         public MirLabel CurrentExperienceValue;
         public MirLabel MaxExperienceValue;
@@ -1339,6 +1358,17 @@ namespace Client.MirScenes.Dialogs
             };
             // [hack] end
 
+            // [hack] add time display to main UI
+            ClockLabel = new MirLabel
+            {
+                AutoSize = true,
+                Parent = this,
+                Location = new Point(MaxExperienceValue.Location.X + MaxExperienceValue.Size.Width + 20, MaxExperienceValue.Location.Y),
+                ForeColour = Color.White,
+                OutLine = true,
+                NotControl = true,
+            };
+            // [hack] end
             SizeButton = new MirButton
             {
                 Index = 2057,

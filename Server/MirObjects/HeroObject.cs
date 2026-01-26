@@ -1057,6 +1057,9 @@ namespace Server.MirObjects
                             {
                                 case ObjectType.Monster:
                                 case ObjectType.Hero:
+                                    // [hack] add BugBagMaggot to Hero's attack target list
+                                    if (ob is BugBagMaggot) Target = ob;
+
                                     if (ob is TownArcher) continue;
                                     if (!ob.IsAttackTarget(Owner)) continue;
                                     if (ob.Hidden && (!CoolEye || Level < ob.Level)) continue;
