@@ -7878,8 +7878,8 @@ namespace Server.MirObjects
                 {
                     if (i != (int)EquipmentSlot.Weapon)
                     {
-                        // [hack] don't reduce equipment durability
-                        // DamageItem(Info.Equipment[i], Envir.Random.Next(1) + 1);
+                        // [hack] comment off this if don't want to reduce equipment durability
+                         DamageItem(Info.Equipment[i], Envir.Random.Next(1) + 1);
                     }
                 }
             }
@@ -7888,8 +7888,8 @@ namespace Server.MirObjects
         {
             if (!SpecialMode.HasFlag(SpecialItemMode.NoDuraLoss))
             {
-                // [hack] don't reduce weapon durability
-                // DamageItem(Info.Equipment[(int)EquipmentSlot.Weapon], Envir.Random.Next(4) + 1);
+                // [hack] comment off this if don't want to reduce weapon durability
+                 DamageItem(Info.Equipment[(int)EquipmentSlot.Weapon], Envir.Random.Next(4) + 1);
             }
         }
         public void DamageItem(UserItem item, int amount, bool isChanged = false)
@@ -7898,10 +7898,23 @@ namespace Server.MirObjects
             if ((item.WeddingRing == Info.Married) && (Info.Equipment[(int)EquipmentSlot.RingL].UniqueID == item.UniqueID)) return;
             if (item.GetTotal(Stat.Strong) > 0) amount = Math.Max(1, amount - item.GetTotal(Stat.Strong));
 
-            // [hack] don't reduce item durability
+            // [hack] comment off this if don't want to reduce item durability
             // item.CurrentDura = (ushort)Math.Max(ushort.MinValue, item.CurrentDura - amount);
+            // [hack] now we change the chance of reducing item durability from 100% to 50%
+            // other 50% chance item durability will increase haha
+            ushort oldDura = item.CurrentDura;
+            if (Envir.Random.Next(100) < 50)
+            {
+                item.CurrentDura = (ushort)Math.Max(ushort.MinValue, item.CurrentDura - amount);
+            }
+            else
+            {
+                item.CurrentDura = (ushort)Math.Min(item.MaxDura, item.CurrentDura + amount);
+            }
 
-            item.DuraChanged = true;
+            //item.DuraChanged = true;
+            item.DuraChanged = item.CurrentDura == oldDura;
+            // [hack] end
 
             if (item.CurrentDura > 0 && isChanged != true) return;
             Enqueue(new S.DuraChanged { UniqueID = item.UniqueID, CurrentDura = item.CurrentDura });
