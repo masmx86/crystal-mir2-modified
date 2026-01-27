@@ -6889,6 +6889,7 @@ namespace Server.MirObjects
                 }
             }
 
+            //[hack]
             // if specified poison type not found in inventory then return null
             if (shape != 0)
                 return null;
