@@ -1,7 +1,7 @@
 # crystal-mir2-modified
 基于 [Crystal Mir2](https://github.com/Suprcode/Crystal)，添加了一些外挂辅助功能，主要用于单机自己玩 ![:-)](https://github.com/masmx86/crystal-mir2-modified/blob/main/smile.jpg)
 
-###### 已同步到最新的[Crystal Mir2](https://github.com/Suprcode/Crystal)，后续更新切换到 [Legend-of-Mir-2](https://github.com/masmx86/Legend-of-Mir-2)，因为我不知道怎么拉取分支、合并分支，所以就新建了一个仓库[:-)](https://github.com/masmx86/crystal-mir2-modified/blob/main/smile.jpg)
+已同步到最新的[Crystal Mir2](https://github.com/Suprcode/Crystal)，后续更新切换到 [Legend-of-Mir-2](https://github.com/masmx86/Legend-of-Mir-2)，因为我不知道怎么拉取分支、合并分支，所以就新建了一个仓库 ![:-)](https://github.com/masmx86/crystal-mir2-modified/blob/main/smile.jpg)
 
 ##### 文件中做过的修改：
 
