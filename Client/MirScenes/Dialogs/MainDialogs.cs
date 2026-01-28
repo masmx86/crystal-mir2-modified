@@ -1363,7 +1363,7 @@ namespace Client.MirScenes.Dialogs
             {
                 AutoSize = true,
                 Parent = this,
-                Location = new Point(MaxExperienceValue.Location.X + MaxExperienceValue.Size.Width + 20, MaxExperienceValue.Location.Y),
+                Location = new Point(Location.X / 2 + 40, 0),
                 ForeColour = Color.White,
                 OutLine = true,
                 NotControl = true,
